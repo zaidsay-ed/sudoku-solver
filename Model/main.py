@@ -31,6 +31,8 @@ example3 = [[6,4,0,0,7,0,0,0,0],
             [2,0,0,4,0,8,0,1,0],
             [0,0,0,0,6,0,0,8,2]]
 
+example = example1  #used in solver
+
 """
 let x be example mentioned above
 
@@ -48,3 +50,17 @@ let lox be graphofx
 (solved? (first lox))                 ;if so produce that
 (solve (rest lox)))])))           ;or try rest of children
 """
+
+def solve():
+    global example
+    for row in range(0,9):
+        for column in range(0,9):
+            if example[row][column] == 0:
+                for number in range(0,10):
+                    if is_solved(row, column, number):
+                        example[row][column] = number
+                        solve()
+                        example[row][column] = 0
+                return
+
+
