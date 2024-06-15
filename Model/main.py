@@ -31,7 +31,7 @@ example3 = [[6,4,0,0,7,0,0,0,0],
             [2,0,0,4,0,8,0,1,0],
             [0,0,0,0,6,0,0,8,2]]
 
-example = example1  #used in solver
+matrix = example1  #used in solver
 
 """
 let x be example mentioned above
@@ -52,15 +52,36 @@ let lox be graphofx
 """
 
 def solve():
-    global example
+    global matrix
     for row in range(0,9):
         for column in range(0,9):
-            if example[row][column] == 0:
+            if matrix[row][column] == 0:
                 for number in range(0,10):
                     if is_solved(row, column, number):
-                        example[row][column] = number
+                        matrix[row][column] = number
                         solve()
-                        example[row][column] = 0
-                return
+                        matrix[row][column] = 0
+
+                return print(nump.matrix(matrix))
 
 
+def is_solved(row, column, number):
+    global matrix
+
+    for i in range(0, 9):            #check if number is given in row
+        if matrix[row][i] == number:
+            return False
+
+    for i in range(0, 9):            #check if number is given in column
+        if matrix[i][column] == number:
+            return False
+
+    x = (column // 3) * 3
+    y = (row // 3) * 3
+
+    for i in range(0, 3):           #check if number is given in square
+        for j in range(0, 3):
+            if matrix[y+i][x+j] == number:
+                return False
+
+    return True
